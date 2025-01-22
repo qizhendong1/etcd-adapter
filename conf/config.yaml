@@ -9,10 +9,18 @@ log:
   level: info
 
 datasource:
-  type: btree # btree of mysql
+  type: btree # btree, mysql or dynamodb
   # mysql:
   #   host: 127.0.0.1
   #   port: 3306
   #   username: root
   #   password:
   #   database: apisix
+  fdb:
+    cluster_file:
+    directory:
+  dynamodb:
+    ip: 192.168.8.109
+    port: 8080
+    table: TryDaxTable
+    timeout: 30
