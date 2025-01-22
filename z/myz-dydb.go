@@ -11,6 +11,11 @@ import (
 	"time"
 )
 
+type dynamodbCache struct {
+	//options *Options
+	client *dynamodb.Client
+}
+
 func main() {
 	ctx := context.TODO()
 	cfg, err := config.LoadDefaultConfig(
@@ -27,11 +32,12 @@ func main() {
 	}
 	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
-	svc := dynamodb.NewFromConfig(cfg, func(options *dynamodb.Options) {
+	var t dynamodbCache
+	t.client = dynamodb.NewFromConfig(cfg, func(options *dynamodb.Options) {
 		options.BaseEndpoint = aws.String("http://192.168.8.109:8080")
 		options.RetryMaxAttempts = 2
 	})
-	out, err := svc.CreateTable(context.TODO(), &dynamodb.CreateTableInput{
+	out, err := t.client.CreateTable(context.TODO(), &dynamodb.CreateTableInput{
 		AttributeDefinitions: []types.AttributeDefinition{
 			{
 				AttributeName: aws.String("id"),
@@ -44,7 +50,7 @@ func main() {
 				KeyType:       types.KeyTypeHash,
 			},
 		},
-		TableName:   aws.String("my-table"),
+		TableName:   aws.String("balancer-test"),
 		BillingMode: types.BillingModePayPerRequest,
 	})
 	if err != nil {
@@ -52,14 +58,4 @@ func main() {
 	}
 
 	fmt.Println(out.TableDescription)
-
-	// del
-	out, err = svc.DeleteTable(ctx, &dynamodb.DeleteTableInput{
-		TableName: aws.String("my-table"),
-	})
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println(out)
 }

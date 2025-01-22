@@ -6,10 +6,10 @@ server:
 #   key: /path/to/file.pem
 
 log:
-  level: info
+  level: debug
 
 datasource:
-  type: btree # btree, mysql or dynamodb
+  type: dynamodb # btree, mysql or dynamodb
   # mysql:
   #   host: 127.0.0.1
   #   port: 3306
@@ -22,5 +22,5 @@ datasource:
   dynamodb:
     ip: 192.168.8.109
     port: 8080
-    table: TryDaxTable
+    table: balancer-routes
     timeout: 30

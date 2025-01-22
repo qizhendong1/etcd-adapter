@@ -89,6 +89,9 @@ var rootCmd = &cobra.Command{
 				Table:   dynamodbConfig.Table,
 				Timeout: dynamodbConfig.Timeout,
 			})
+			if err != nil {
+				dief("failed to create DynamoDB backend, err: %s", err)
+			}
 			fmt.Printf("%s", dynamodbConfig.Ip)
 		default:
 			dief("does not support backends from %s", config.Config.DataSource.Type)

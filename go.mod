@@ -7,6 +7,7 @@ require (
 	github.com/apple/foundationdb/bindings/go v0.0.0-20240515141816-262c6fe778ad
 	github.com/aws/aws-sdk-go-v2 v1.33.0
 	github.com/aws/aws-sdk-go-v2/config v1.29.1
+	github.com/aws/aws-sdk-go-v2/credentials v1.17.54
 	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.39.5
 	github.com/google/btree v1.1.2
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
@@ -27,7 +28,6 @@ require (
 
 require (
 	github.com/Rican7/retry v0.3.1 // indirect
-	github.com/aws/aws-sdk-go-v2/credentials v1.17.54 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.16.24 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.28 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.6.28 // indirect
