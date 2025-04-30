@@ -31,6 +31,7 @@ import (
 
 	"github.com/api7/etcd-adapter/pkg/adapter"
 	"github.com/api7/etcd-adapter/pkg/backends/btree"
+	"github.com/api7/etcd-adapter/pkg/backends/dynamodb"
 	"github.com/api7/etcd-adapter/pkg/backends/mysql"
 	"github.com/api7/etcd-adapter/pkg/config"
 )
@@ -71,6 +72,27 @@ var rootCmd = &cobra.Command{
 			}
 		case config.BTree:
 			backend = btree.NewBTreeCache()
+		case config.FDB:
+			//fdbConfig := config.Config.DataSource.FDB
+			//backend, err = fdb.NewFDBCache(context.TODO(), &fdb.Options{
+			//	ClusterFile: fdbConfig.ClusterFile,
+			//	Directory:   strings.Split(fdbConfig.Directory, "/"),
+			//})
+			//if err != nil {
+			//	dief("failed to create FDB backend, err: %s", err)
+			//}
+		case config.DynamoDB:
+			dynamodbConfig := config.Config.DataSource.DynamoDB
+			backend, err = dynamodb.NewDynamoDBCache(context.TODO(), &dynamodb.Options{
+				Ip:      dynamodbConfig.Ip,
+				Port:    dynamodbConfig.Port,
+				Table:   dynamodbConfig.Table,
+				Timeout: dynamodbConfig.Timeout,
+			})
+			if err != nil {
+				dief("failed to create DynamoDB backend, err: %s", err)
+			}
+			fmt.Printf("%s", dynamodbConfig.Ip)
 		default:
 			dief("does not support backends from %s", config.Config.DataSource.Type)
 		}

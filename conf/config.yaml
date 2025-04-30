@@ -6,13 +6,21 @@ server:
 #   key: /path/to/file.pem
 
 log:
-  level: info
+  level: debug
 
 datasource:
-  type: btree # btree of mysql
+  type: dynamodb # btree, mysql or dynamodb
   # mysql:
   #   host: 127.0.0.1
   #   port: 3306
   #   username: root
   #   password:
   #   database: apisix
+  fdb:
+    cluster_file:
+    directory:
+  dynamodb:
+    ip: 192.168.8.109
+    port: 8080
+    table: balancer-routes
+    timeout: 30
